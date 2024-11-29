@@ -53,7 +53,8 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="track/[id]" options={{title: "Track",}}/>
+        <Stack.Screen name="track/[id]" options={{title: "Track"}}/>
+        <Stack.Screen name="new-track" options={{title: "New Track", headerShown:false}}/>
       </Stack>
     </ThemeProvider>
   );
