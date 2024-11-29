@@ -3,7 +3,7 @@ import React from 'react'
 const LabelContract = () => {
     return(
         <View>
-            <Text>Label Contract</Text>
+            <Text> Tape Master</Text>
         </View>
     )
 }
