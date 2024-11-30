@@ -5,6 +5,11 @@ import { Text } from "react-native";
 const DrawerNavigator = createDrawerNavigator().Navigator;
 const Drawer = withLayoutContext(DrawerNavigator);
 
+export const unstable_settings = {
+    // Ensure that reloading on `/modal` keeps a back button present.
+    initialRouteName: "(tabs)",
+  };
+
 function CustomDrawerContent(props){
     return(
         <DrawerContentScrollView{...props}>

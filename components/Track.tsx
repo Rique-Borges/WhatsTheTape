@@ -15,7 +15,7 @@ type TrackProps = {
 const Track = ({track}: TrackProps) => {
 
     return(
-      <Link href={`/track/${track.id}`} asChild>
+      <Link href={`./feed/track/${track.id}`} asChild>
     <Pressable style={styles.container}>
     <Image src={track.user.image} style={styles.userImage}/>
       

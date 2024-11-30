@@ -1,5 +1,5 @@
-import Track from "../../components/Track"
-import tracks from "../../assets/data/tracks"
+import Track from "@/components/Track"
+import tracks from "@/assets/data/tracks"
 import { useGlobalSearchParams } from "expo-router/build/hooks";
 import { Text } from "react-native";
 export default function TrackScreen(){
