@@ -22,6 +22,7 @@ function TabBarIcon(props: {
 function AvatarHeader(){
   const navigation = useNavigation();
   return(
+//@ts-ignore
 <Pressable onPress={() => navigation.openDrawer()}>
   <Image
    src="https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.png"

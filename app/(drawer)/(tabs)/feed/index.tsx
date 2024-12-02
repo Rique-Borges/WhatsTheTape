@@ -1,15 +1,32 @@
-import { StyleSheet, Image, View, Pressable } from 'react-native';
+import { StyleSheet, Image, View, Pressable, ActivityIndicator } from 'react-native';
 import {FlatList} from 'react-native'
 import tracks from '@/assets/data/tracks';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Link } from 'expo-router';
-
+import { listTracks } from '@/lib/api/tracks';
 import Track from '@/components/Track';
-export default function TabOneScreen() {
+import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Text } from '@/components/Themed';
+
+export default function FeedScreen() {
+   const {data, isLoading, error} = useQuery({
+    queryKey: ['tracks'],
+    queryFn: listTracks,
+   });
+
+   
+  if (isLoading){
+    return <ActivityIndicator/>;
+  }
+  if (error){
+    return <Text>{error.message}</Text>
+  }
+ 
   return (
     <View style={styles.page}>
 
-    <FlatList data={tracks} renderItem={({item})=> <Track track={item}/>}/>
+    <FlatList data={data} renderItem={({item})=> <Track track={item}/>}/>
     
     <Pressable>
       <Link href="/new-track" asChild >
