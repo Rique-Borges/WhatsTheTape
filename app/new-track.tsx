@@ -1,6 +1,8 @@
 import { Link, useNavigation, useRouter } from "expo-router";
 import { useState } from "react";
-import { View, StyleSheet, Text, Image, TextInput, Pressable, SafeAreaView, } from "react-native";
+import { View, StyleSheet, Text, Image, TextInput, Pressable, SafeAreaView, ActivityIndicator, } from "react-native";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postTrack } from "@/lib/api/tracks";
 
 const user = {
   id: "u1",
@@ -51,11 +53,32 @@ export default function NewTrack() {
     const [text, setText] = useState("");
     const router = useRouter();
 
-    const onTrackPress = () => {
-        console.warn('Tracking the tape:', text, )
+    const queryClient = useQueryClient();
 
-        setText("");
+   
+    const { mutateAsync, isLoading, isError, error } = useMutation({
+      mutationFn: postTrack,
+      onSuccess: (data) => {
+        // Update cache directly
+        queryClient.setQueryData(['tracks'], (existingTracks) => {
+          return [data, ...(existingTracks || [])]; // Prepend new track
+        });
+      },
+    });
+    
+
+    const onTrackPress = async () => {
+        console.warn('Tracking the tape: ', text, )
+
+        try{
+        await mutateAsync({content: text});
+
+         setText("");
         router.back();
+      } catch(e){
+             {/* @ts-ignore */}
+        console.log('error', e.message)
+      }
     }
   return (
     <SafeAreaView style={{flex:1, backgroundColor: 'white'}}>
@@ -64,6 +87,7 @@ export default function NewTrack() {
          <Link href = "../" style={styles.backButton} >
           Scratch
          </Link>
+         {isLoading && <ActivityIndicator/>}
          <Pressable onPress={onTrackPress} style={styles.trackButton} >
           <Text style={styles.buttonText}>Track</Text>
          </Pressable>
@@ -78,6 +102,8 @@ export default function NewTrack() {
       numberOfLines={5}
       style= {{flex:1}} />
      </View>
+     {/* @ts-ignore */}
+     {isError && <Text>Error: {error.message}</Text>}
     </View>
     </SafeAreaView>
   );
