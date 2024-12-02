@@ -17,3 +17,17 @@ export const listTracks = async () =>{
     return await res.json()
    
 }
+export const getTrack = async (id: string) =>{
+    const res = await fetch(`${API_URL}/track/${id}`,{
+        headers:{
+          Authorization: `Bearer ${authToken}`
+        }
+      });
+      if(res.status == 401){
+        throw new Error("Unauthorized. Please register or Sign-in");
+      }
+      if(res.status !== 200){
+        throw new Error("error fetching tracks");
+      }
+      return await res.json()
+}

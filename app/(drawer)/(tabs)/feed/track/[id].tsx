@@ -1,16 +1,26 @@
 import Track from "@/components/Track"
-import tracks from "@/assets/data/tracks"
 import { useGlobalSearchParams } from "expo-router/build/hooks";
-import { Text } from "react-native";
+import { ActivityIndicator, Text } from "react-native";
+import { useQuery } from "@tanstack/react-query";
+import { getTrack } from "@/lib/api/tracks";
+
 export default function TrackScreen(){
 const { id } = useGlobalSearchParams();
-console.warn(id);
 
-const track = tracks.find(t => t.id === id)
+console.warn(id); //remover isso antes do deploy
 
-    if(!track){
+const {data, isLoading, error} = useQuery({
+    queryKey:['track', id],
+    queryFn: () => getTrack(id as string)
+})
+
+    if(isLoading){
+        return <ActivityIndicator/>;
+    }
+
+    if(error){
         return <Text>Track {id} not Found</Text>
     }
 
-    return <Track track={track}/>; 
+    return <Track track={data}/>; 
 }
