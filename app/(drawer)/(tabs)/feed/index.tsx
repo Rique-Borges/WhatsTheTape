@@ -20,6 +20,7 @@ export default function FeedScreen() {
     return <ActivityIndicator/>;
   }
   if (error){
+    //@ts-expect-error
     return <Text>{error.message}</Text>
   }
  

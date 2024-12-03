@@ -59,6 +59,8 @@ function RootLayoutNav() {
         <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
         <Stack.Screen name="new-track" options={{title: "New Track", headerShown:false}}/>
+        <Stack.Screen name='(auth)/signIn' options={{headerShown:false}}/>
+        <Stack.Screen name='(auth)/authenticate' options={{title: "Confirm your Email"}}/>
       </Stack>
     </ThemeProvider>
     </QueryClientProvider>

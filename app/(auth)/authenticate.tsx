@@ -1,6 +1,7 @@
-import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { useSearchParams } from 'expo-router/build/hooks';
+import { authenticate } from '@/lib/api/auth';
 
 const Authenticate = () => {
   const [code, setCode] = useState('');
@@ -8,7 +9,15 @@ const Authenticate = () => {
   const email = searchParams.get('email'); // Corrigido aqui
 
   const onConfirm = async () => {
-    console.warn('Authenticate:', email, code);
+    if (typeof email !== 'string'){
+      return;
+    }
+    try {
+      const res = await authenticate({email, emailToken:code})
+      console.log(res);
+    } catch (e) {
+      Alert.alert("Error:", "Email code is incorrect")
+    }
   };
 
   return (
