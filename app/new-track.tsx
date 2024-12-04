@@ -9,7 +9,7 @@ const user = {
   username: "VadimNotJustDev",
   name: "Vadim",
   image:
-    "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.png",
+    "https://img.freepik.com/premium-vector/music-cassette-retro-vector-design-yellow-background_175103-1167.jpg",
 };
 
 const styles = StyleSheet.create({

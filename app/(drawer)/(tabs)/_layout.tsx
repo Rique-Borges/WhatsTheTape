@@ -25,7 +25,7 @@ function AvatarHeader(){
 //@ts-ignore
 <Pressable onPress={() => navigation.openDrawer()}>
   <Image
-   src="https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.png"
+   src="https://img.freepik.com/premium-vector/music-cassette-retro-vector-design-yellow-background_175103-1167.jpg"
     style={{width:30, aspectRatio:1, borderRadius:50, marginLeft: 10}}/>
 </Pressable>
 )
