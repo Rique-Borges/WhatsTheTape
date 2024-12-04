@@ -6,7 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
-
+import AuthContextProvider from '@/context/AuthContext';
 import { useColorScheme } from '@/components/useColorScheme';
 
 const client = new QueryClient();
@@ -53,6 +53,7 @@ function RootLayoutNav() {
 
   return (
     <>
+    <AuthContextProvider>
 <QueryClientProvider client={client}>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
@@ -64,6 +65,7 @@ function RootLayoutNav() {
       </Stack>
     </ThemeProvider>
     </QueryClientProvider>
+    </AuthContextProvider>
 </>
 
   );

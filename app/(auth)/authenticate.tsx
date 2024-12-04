@@ -2,11 +2,16 @@ import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-nativ
 import React, { useState } from 'react';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { authenticate } from '@/lib/api/auth';
+import { useAuth } from '@/context/AuthContext';
 
 const Authenticate = () => {
   const [code, setCode] = useState('');
   const searchParams = useSearchParams();
+  //@ts-expect-error
+  const {setAuthToken} = useAuth();
+
   const email = searchParams.get('email'); // Corrigido aqui
+
 
   const onConfirm = async () => {
     if (typeof email !== 'string'){
@@ -15,6 +20,7 @@ const Authenticate = () => {
     try {
       const res = await authenticate({email, emailToken:code})
       console.log(res);
+      setAuthToken(res.authToken);
     } catch (e) {
       Alert.alert("Error:", "Email code is incorrect")
     }
