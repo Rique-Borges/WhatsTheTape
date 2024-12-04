@@ -2,7 +2,7 @@ import { Link, useNavigation, useRouter } from "expo-router";
 import { useState } from "react";
 import { View, StyleSheet, Text, Image, TextInput, Pressable, SafeAreaView, ActivityIndicator, } from "react-native";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postTrack } from "@/lib/api/tracks";
+import { useTracksApi } from "@/lib/api/tracks";
 
 const user = {
   id: "u1",
@@ -52,6 +52,8 @@ export default function NewTrack() {
 
     const [text, setText] = useState("");
     const router = useRouter();
+    const {postTrack} = useTracksApi()
+
 
     const queryClient = useQueryClient();
 

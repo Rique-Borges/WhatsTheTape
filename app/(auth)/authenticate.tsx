@@ -14,17 +14,23 @@ const Authenticate = () => {
 
 
   const onConfirm = async () => {
-    if (typeof email !== 'string'){
+    if (typeof email !== 'string') {
       return;
     }
     try {
-      const res = await authenticate({email, emailToken:code})
+      const res = await authenticate({ email, emailToken: code });
       console.log(res);
       await updateAuthToken(res.authToken);
     } catch (e) {
-      Alert.alert("Error:", "Email code is incorrect")
+      console.error(e); // Log the full error for debugging
+      if (e.response && e.response.status === 400) {
+        Alert.alert("Error", "Email code is incorrect");
+      } else {
+        Alert.alert("Error", "An unexpected error occurred");
+      }
     }
   };
+  
 
   return (
     <View style={styles.container}>

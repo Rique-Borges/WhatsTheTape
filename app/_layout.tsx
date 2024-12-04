@@ -8,6 +8,7 @@ import 'react-native-reanimated';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import AuthContextProvider from '@/context/AuthContext';
 import { useColorScheme } from '@/components/useColorScheme';
+import TracksApiContextProvider from '@/lib/api/tracks';
 
 const client = new QueryClient();
 
@@ -54,6 +55,7 @@ function RootLayoutNav() {
   return (
     <>
     <AuthContextProvider>
+      <TracksApiContextProvider>
 <QueryClientProvider client={client}>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
@@ -65,6 +67,7 @@ function RootLayoutNav() {
       </Stack>
     </ThemeProvider>
     </QueryClientProvider>
+    </TracksApiContextProvider>
     </AuthContextProvider>
 </>
 
