@@ -8,7 +8,7 @@ const Authenticate = () => {
   const [code, setCode] = useState('');
   const searchParams = useSearchParams();
   //@ts-expect-error
-  const {setAuthToken} = useAuth();
+  const {updateAuthToken} = useAuth();
 
   const email = searchParams.get('email'); // Corrigido aqui
 
@@ -20,7 +20,7 @@ const Authenticate = () => {
     try {
       const res = await authenticate({email, emailToken:code})
       console.log(res);
-      setAuthToken(res.authToken);
+      await updateAuthToken(res.authToken);
     } catch (e) {
       Alert.alert("Error:", "Email code is incorrect")
     }
