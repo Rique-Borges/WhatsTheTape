@@ -7,7 +7,6 @@ import { useAuth } from '@/context/AuthContext';
 const Authenticate = () => {
   const [code, setCode] = useState('');
   const searchParams = useSearchParams();
-  //@ts-expect-error
   const {updateAuthToken} = useAuth();
 
   const email = searchParams.get('email'); // Corrigido aqui
@@ -23,6 +22,7 @@ const Authenticate = () => {
       await updateAuthToken(res.authToken);
     } catch (e) {
       console.error(e); // Log the full error for debugging
+    //@ts-expect-error
       if (e.response && e.response.status === 400) {
         Alert.alert("Error", "Email code is incorrect");
       } else {
