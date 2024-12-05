@@ -6,6 +6,7 @@ import {
   Alert,
   Text,
   ActivityIndicator,
+  useColorScheme,
 } from 'react-native';
 import Track from '../../../../components/Track';
 // import Tracks from '../../../../assets/data/Tracks';
@@ -17,6 +18,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export default function FeedScreen() {
   const { listTracks } = useTracksApi();
+  const colorScheme = useColorScheme(); // Detect light or dark theme
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['tracks'],
@@ -32,11 +34,21 @@ export default function FeedScreen() {
   }
 
   return (
-    <View style={styles.page}>
+    <View
+      style={[
+        styles.page,
+        { backgroundColor: colorScheme === 'dark' ? 'black' : 'white' },
+      ]}
+    >
       <FlatList data={data} renderItem={({ item }) => <Track track={item} />} />
 
       <Link href="/new-track" asChild>
-      <MaterialCommunityIcons name="music-note-plus" size={24} color="black" style={styles.floatingButton}/>
+        <MaterialCommunityIcons
+          name="music-note-plus"
+          size={24}
+          color={colorScheme === 'dark' ? 'white' : 'black'}
+          style={styles.floatingButton}
+        />
       </Link>
     </View>
   );
@@ -45,10 +57,9 @@ export default function FeedScreen() {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: 'white',
   },
   floatingButton: {
-    backgroundColor: '#1C9BF0',
+    backgroundColor: '#f3b240',
 
     borderRadius: 25,
     padding: 15,

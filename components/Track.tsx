@@ -12,41 +12,57 @@ type TrackProps = {
     track: TrackType;
 }
 
-const Track = ({track}: TrackProps) => {
+const DEFAULT_USER_IMAGE = "/assets/images/newicon.png"; // Adjust the path as needed
 
-    return(
-      <Link href={`./feed/track/${track.id}`} asChild>
-    <Pressable style={styles.container}>
-    <Image src={track.user.image} style={styles.userImage}/>
-      
-      <View style={styles.mainContainer}>
-        <View style={{flexDirection:'row'}}>
+const Track = ({ track }: TrackProps) => {
+  const userImage = track.user.image || DEFAULT_USER_IMAGE; // Use fallback if image is undefined
+
+  return (
+    <Link href={`./feed/track/${track.id}`} asChild>
+      <Pressable style={styles.container}>
+        <Image 
+          source={{ uri: userImage }} // Correctly use source for React Native
+          style={styles.userImage}
+        />
+        
+        <View style={styles.mainContainer}>
+          <View style={{ flexDirection: 'row' }}>
             <Text style={styles.name}>{track.user.name}</Text>
             <Text style={styles.username}>@{track.user.username} · 2h</Text>
-            <FontAwesome6 name="ellipsis" size={20} color="dimgray" style={{marginLeft:'auto',fontWeight: 'bold'}} />
+            <FontAwesome6 
+              name="ellipsis" 
+              size={20} 
+              color="dimgray" 
+              style={{ marginLeft: 'auto', fontWeight: 'bold' }} 
+            />
+          </View>
+          <Text style={styles.content}>{track.content}</Text>
+        
+          {track.image && (
+            <Image 
+              source={{ uri: track.image }} 
+              style={styles.image} 
+            />
+          )}
+          <View style={styles.footer}>
+            <IconButton icon="comment" text={track.numberOfComments?.toString()} />
+            <IconButton icon="retweet" text={track.numberOfReplays} />
+            <IconButton icon="heart" text={track.numberOfLikes} />
+            <IconButton icon="chart" text={track.impressions || 0} />
+            <Entypo name="share" size={20} color="dimgray" />
+          </View>
         </View>
-        <Text style={styles.content}>{track.content}</Text>
-      
-      {track.image &&  <Image src={track.image} style={styles.image} />}
-      <View style={styles.footer}>
-        <IconButton icon="comment" text={track.numberOfComments?.toString()} />
-        <IconButton icon="retweet" text={track.numberOfReplays}/>
-        <IconButton icon="heart" text={track.numberOfLikes}/>
-        <IconButton icon="chart" text={track.impressions || 0}/>
-        <Entypo name="share" size={20} color="dimgray " />
-      </View>
-      </View>
-    </Pressable>
+      </Pressable>
     </Link>
-    )
-}
+  );
+};
+
 const styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
       padding: 10, 
       borderBottomWidth:StyleSheet.hairlineWidth,
       borderColor: 'lightgray',
-      backgroundColor:'white'
     },
     userImage:{
       width: 50,

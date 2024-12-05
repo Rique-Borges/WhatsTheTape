@@ -6,8 +6,8 @@ import { useTracksApi } from "@/lib/api/tracks";
 
 const user = {
   id: "u1",
-  username: "VadimNotJustDev",
-  name: "Vadim",
+  username: "newtracker65",
+  name: "New Tracker",
   image:
     "https://img.freepik.com/premium-vector/music-cassette-retro-vector-design-yellow-background_175103-1167.jpg",
 };
@@ -36,21 +36,29 @@ const styles = StyleSheet.create({
         fontSize:18,
     },
     trackButton:{
-        backgroundColor:'#1C9BF0',
+        backgroundColor:'#f3b240',
         padding: 10,
         paddingHorizontal:20,
         borderRadius:25
     },
     buttonText:{
-        color: 'white',
+        color: 'black',
         fontWeight: 'bold',
         fontSize: 16,
+    },
+    input: {
+      flex: 1,
+      borderBottomWidth: 1,
+      borderColor: '#ccc',
+      marginBottom: 10,
+      padding: 5,
     }
 });
 
 export default function NewTrack() {
 
     const [text, setText] = useState("");
+    const [imageUrl, setImageUrl] = useState(""); // State for the image URL
     const router = useRouter();
     const {postTrack} = useTracksApi()
 
@@ -70,20 +78,22 @@ export default function NewTrack() {
     
 
     const onTrackPress = async () => {
-        console.warn('Tracking the tape: ', text, )
+        console.warn('Tracking the tape: ', text, 'Image URL: ', imageUrl);
 
         try{
-        await mutateAsync({content: text});
+          await mutateAsync({ content: text, image: imageUrl });
 
-         setText("");
-        router.back();
-      } catch(e){
-             {/* @ts-ignore */}
-        console.log('error', e.message)
-      }
+          setText("");
+          setImageUrl(""); // Clear the image URL field
+          router.back();
+        } catch(e){
+          {/* @ts-ignore */}
+          console.log('error', e.message)
+        }
     }
+
   return (
-    <SafeAreaView style={{flex:1, backgroundColor: 'white'}}>
+    <SafeAreaView style={{flex:1}}>
     <View style={styles.container}>
         <View style={styles.buttonContainer}>
          <Link href = "../" style={styles.backButton} >
@@ -104,6 +114,12 @@ export default function NewTrack() {
       numberOfLines={5}
       style= {{flex:1}} />
      </View>
+     <TextInput
+        value={imageUrl}
+        onChangeText={setImageUrl}
+        placeholder="Enter image URL"
+        style={styles.input}
+      />
      {/* @ts-ignore */}
      {isError && <Text>Error: {error.message}</Text>}
     </View>
