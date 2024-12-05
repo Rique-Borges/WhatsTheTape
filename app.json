@@ -20,7 +20,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.rique_borges.WhatsTheTape"
     },
     "web": {
       "bundler": "metro",
@@ -33,6 +34,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "2cd06ec6-a89a-43e5-88d3-0e560fafe1a8"
+      }
     }
   }
 }
